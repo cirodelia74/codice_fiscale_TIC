@@ -615,11 +615,12 @@ public class CodiceFiscale {
 	@Override
 	public String toString() {
 		return "Informazioni Inserite:"
-			 + "\nCognome: " +cognome 
-			 + "\nNome:" +nome 
-			 + "\nSesso:" +sesso 
-			 + "\nData di nascita: " +giornoNascita  +"/" +meseNascita +"/" +annoNascita
-			 + "\nComune: " +comuneNascita;
+			 + "\nCognome: " +this.cognome 
+			 + "\nNome:" +this.nome 
+			 + "\nSesso:" +this.sesso 
+			 + "\nData di nascita: " +this.giornoNascita  +"/" +this.meseNascita +"/" +this.annoNascita
+			 + "\nComune: " +this.comuneNascita
+			 + "\nCodice Fiscale: " +this.codiceFiscale;
 	}
 	
 	
