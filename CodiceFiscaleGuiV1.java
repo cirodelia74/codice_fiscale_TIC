@@ -272,15 +272,12 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		@Override
 		public void keyTyped(KeyEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
+			// TODO Auto-generated method stub			
+		}		
 	}
 	
 	/**
@@ -365,8 +362,7 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 			if (rdSessoM.isSelected()) {
 				codiceFiscale.setSesso('M');
 			}
-			
-			if (rdSessoF.isSelected()) {
+			else {
 				codiceFiscale.setSesso('F');
 			}
 			codiceFiscale.setComuneNascita(txtComune.getText());
@@ -396,22 +392,18 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		@Override
 		public void insertUpdate(DocumentEvent e) {
 
-			btnCalcola.setEnabled(true);
-			
+			btnCalcola.setEnabled(true);		
 		}
 
 		@Override
 		public void removeUpdate(DocumentEvent e) {
-			// TODO Auto-generated method stub
-			
+			// TODO Auto-generated method stub			
 		}
 
 		@Override
 		public void changedUpdate(DocumentEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
+			// TODO Auto-generated method stub		
+		}		
 	}
 	
 	/**
