@@ -73,15 +73,7 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		codiceFiscale = new CodiceFiscale();
 		
 		// controllo focus tra i JTextField 
-		txtCognome.addKeyListener(moveFocus);
-		txtNome.addKeyListener(moveFocus);
-		txtGiorno.addKeyListener(moveFocus);
-		txtMese.addKeyListener(moveFocus);
-		txtAnno.addKeyListener(moveFocus);
-		rdSessoM.addKeyListener(moveFocus);
-		rdSessoF.addKeyListener(moveFocus);
-		txtComune.addKeyListener(moveFocus);
-		txtComune.getDocument().addDocumentListener(myDocumentListener);
+		gestisciFocus();
 		
 		// Selezione tra le opzioni del RadioBtton
 		rdSessoM.setSelected(true);
@@ -144,7 +136,7 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		txtAnno = new JTextField(4);
 		txtCodice = new JTextField();
 		txtCodice.setHorizontalAlignment(JTextField.CENTER);
-		txtCodice.setFont(new Font(txtCodice.getFont().getFamily(), Font.BOLD, 16));
+		txtCodice.setFont(new Font(txtCodice.getFont().getFamily(), Font.BOLD, 15));
 		txtCodice.setEditable(false);
 		
 		// inizializzazione di tutte le label
@@ -218,6 +210,22 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 	}
 	
 	/**
+	 * Metodo che gestisce il focus tra i vari campi di immissione del testo
+	 * nell'applicazione
+	 */
+	private void gestisciFocus() {
+		txtCognome.addKeyListener(moveFocus);
+		txtNome.addKeyListener(moveFocus);
+		txtGiorno.addKeyListener(moveFocus);
+		txtMese.addKeyListener(moveFocus);
+		txtAnno.addKeyListener(moveFocus);
+		rdSessoM.addKeyListener(moveFocus);
+		rdSessoF.addKeyListener(moveFocus);
+		txtComune.addKeyListener(moveFocus);
+		txtComune.getDocument().addDocumentListener(myDocumentListener);
+	}
+	
+	/**
 	 * classe interna che implementa i KeyListener dei componenti che la utilizzano
 	 *
 	 */
@@ -286,85 +294,96 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 			
 			// gestione del pulsante RESET
 			if (e.getActionCommand().equals(BTN_ACTION_RESET)) {
-				// resetto tutti i campi
-				
-				// verifico se l'oggetto istanziato ha gia' valori inseriti
-				// in questo caso resetto tutti i suoi valori
-				if (!codiceFiscale.getCognome().equals("")) {
-					codiceFiscale.reset();			
-				}
-				// pulizia dei JTextField dell'applicazione
-				resetCampiGUI();
-
+				resetBTN();
+				return;
 			}
 			
 			// gestione del pulsante CALCOLA
 			if (e.getActionCommand().equals(BTN_ACTION_CALCOLA)) {
-				
-				if (!CheckCampiGUI.checkCognome(txtCognome.getText())) {
-					campiValidi = false;
-				}
-					
-				
-				if (!CheckCampiGUI.checkNome(txtNome.getText())) {
-					campiValidi = false;
-				}
-					
-				// controllo della validita' della data di nascita inserita
-				int giorno = 0;
-				int mese = 0;
-				int anno = 0;
-				
-				try {
-					giorno = Integer.parseInt(txtGiorno.getText());
-					mese = Integer.parseInt(txtMese.getText());
-					anno = Integer.parseInt(txtAnno.getText());
-					
-					if (!CheckCampiGUI.isDataValida(giorno, mese, anno)) {
-						campiValidi = false;
-					}
-					
-				}
-				catch (NumberFormatException ex) {
-					campiValidi = false;
-				}
-				
-				if (campiValidi) {
-					
-					// caricamento delle informazioni inserite nell'oggetto
-					// codice fiscale istanziato
-					codiceFiscale.setCognome(txtCognome.getText());
-					codiceFiscale.setNome(txtNome.getText());
-					codiceFiscale.setGiornoNascita(giorno);
-					codiceFiscale.setMeseNascita(mese);
-					codiceFiscale.setAnnoNascita(anno);		
-					if (rdSessoM.isSelected()) {
-						codiceFiscale.setSesso('M');
-					}
-					
-					if (rdSessoF.isSelected()) {
-						codiceFiscale.setSesso('F');
-					}
-					codiceFiscale.setComuneNascita(txtComune.getText());
-					
-					// calcolo il codice fiscale
-					if (codiceFiscale.calcolaCodiceFiscale()) {
-						txtCodice.setText(codiceFiscale.getCodiceFiscale());
-					}
-					else {
-						JOptionPane.showMessageDialog(null, "Calcolo del Codice Fiscale non riuscito", "Errore Calcolo Codice", JOptionPane.ERROR_MESSAGE);
-					}
-					
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "Valori inseriti non validi.\n Controlla le informazioni o premi 'Resetta Campi'", "Errore Dati", JOptionPane.ERROR_MESSAGE);
-					campiValidi = true;					
-				}
-				
+								calcolaBTN();
+				return;				
+			}			
+		}
+	}
+	
+	/**
+	 * Metodo che svolge le operazioni quando si preme il tasto per resettare l'applicazione
+	 */
+	private void resetBTN() {
+		
+		// verifico se l'oggetto istanziato ha gia' valori inseriti
+		// in questo caso resetto tutti i suoi valori
+		if (!codiceFiscale.getCognome().equals("")) {
+			codiceFiscale.reset();			
+		}
+		// pulizia dei JTextField dell'applicazione
+		resetCampiGUI();
+	}
+	
+	/**
+	 * Metodo che svolge le operazioni quando si preme il tasto per il calcolo
+	 * del Codice Fiscale e verifica la validita' delle informazioni immesse
+	 */
+	private void calcolaBTN() {
+		if (!CheckCampiGUI.checkCognome(txtCognome.getText())) {
+			campiValidi = false;
+		}
+			
+		
+		if (!CheckCampiGUI.checkNome(txtNome.getText())) {
+			campiValidi = false;
+		}
+			
+		// controllo della validita' della data di nascita inserita
+		int giorno = 0;
+		int mese = 0;
+		int anno = 0;
+		
+		try {
+			giorno = Integer.parseInt(txtGiorno.getText());
+			mese = Integer.parseInt(txtMese.getText());
+			anno = Integer.parseInt(txtAnno.getText());
+			
+			if (!CheckCampiGUI.isDataValida(giorno, mese, anno)) {
+				campiValidi = false;
 			}
 			
 		}
+		catch (NumberFormatException ex) {
+			campiValidi = false;
+		}
 		
+		if (campiValidi) {
+			
+			// caricamento delle informazioni inserite nell'oggetto
+			// codice fiscale istanziato
+			codiceFiscale.setCognome(txtCognome.getText());
+			codiceFiscale.setNome(txtNome.getText());
+			codiceFiscale.setGiornoNascita(giorno);
+			codiceFiscale.setMeseNascita(mese);
+			codiceFiscale.setAnnoNascita(anno);		
+			if (rdSessoM.isSelected()) {
+				codiceFiscale.setSesso('M');
+			}
+			
+			if (rdSessoF.isSelected()) {
+				codiceFiscale.setSesso('F');
+			}
+			codiceFiscale.setComuneNascita(txtComune.getText());
+			
+			// calcolo il codice fiscale
+			if (codiceFiscale.calcolaCodiceFiscale()) {
+				txtCodice.setText(codiceFiscale.getCodiceFiscale());
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Calcolo del Codice Fiscale non riuscito", "Errore Calcolo Codice", JOptionPane.ERROR_MESSAGE);
+			}
+			
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Valori inseriti non validi.\n Controlla le informazioni o premi 'Resetta Campi'", "Errore Dati", JOptionPane.ERROR_MESSAGE);
+			campiValidi = true;					
+		}
 	}
 	
 	/**
