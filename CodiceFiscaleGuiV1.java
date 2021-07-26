@@ -42,6 +42,10 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 	private JLabel lblCognome, lblNome, lblSesso, lblComune, lblData, lblCodice;
 	private JPanel panelPrinc, panelWest, panelCenter, panelDown, panelRadioButton, panelData;
 	
+	private MoveFocus moveFocus;
+	private MyListener myListener;
+	private MyDocumentListener myDocumentListener;
+	
 	private boolean campiValidi = true;
 	
 	private CodiceFiscale codiceFiscale;
@@ -59,6 +63,9 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		// inizializzo i componenti dell'applicazione
 		inizializzaComponent();
 		
+		// istanzio gli Event Listener
+		instanziaEventListener();
+		
 		// costruisco i pannelli
 		componiPanel();
 		
@@ -66,27 +73,27 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		codiceFiscale = new CodiceFiscale();
 		
 		// controllo focus tra i JTextField 
-		txtCognome.addKeyListener(new MoveFocus());
-		txtNome.addKeyListener(new MoveFocus());
-		txtGiorno.addKeyListener(new MoveFocus());
-		txtMese.addKeyListener(new MoveFocus());
-		txtAnno.addKeyListener(new MoveFocus());
-		rdSessoM.addKeyListener(new MoveFocus());
-		rdSessoF.addKeyListener(new MoveFocus());
-		txtComune.addKeyListener(new MoveFocus());
-		txtComune.getDocument().addDocumentListener(new MyDocumentListener());
+		txtCognome.addKeyListener(moveFocus);
+		txtNome.addKeyListener(moveFocus);
+		txtGiorno.addKeyListener(moveFocus);
+		txtMese.addKeyListener(moveFocus);
+		txtAnno.addKeyListener(moveFocus);
+		rdSessoM.addKeyListener(moveFocus);
+		rdSessoF.addKeyListener(moveFocus);
+		txtComune.addKeyListener(moveFocus);
+		txtComune.getDocument().addDocumentListener(myDocumentListener);
 		
 		// Selezione tra le opzioni del RadioBtton
 		rdSessoM.setSelected(true);
-		rdSessoM.addActionListener(new MyListener());		
-		rdSessoF.addActionListener(new MyListener());
+		rdSessoM.addActionListener(myListener);		
+		rdSessoF.addActionListener(myListener);
 		
 		// Gestione degli eventi per i JButton utilizzati
 		btnCalcola.setActionCommand(BTN_ACTION_CALCOLA);
-		btnCalcola.addActionListener(new MyListener());
+		btnCalcola.addActionListener(myListener);
 		
 		btnReset.setActionCommand(BTN_ACTION_RESET);
-		btnReset.addActionListener(new MyListener());
+		btnReset.addActionListener(myListener);
 		
 		
 		// impostazioni finali del Frame Principale
@@ -108,10 +115,7 @@ public class CodiceFiscaleGuiV1 extends JFrame {
         } catch (Exception e) {
              JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
         }
-
-		// pack();
 		setVisible(true);
-	
 	}
 	
 	/**
@@ -151,6 +155,16 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		lblComune = new JLabel("Comune di nascita:");
 		lblCodice = new JLabel("Codice Fiscale:");
 
+	}
+	
+	/**
+	 * Metodo che istanzia gli oggetti degli Event Listener utilizzati nell'applicazione
+	 */
+	private void instanziaEventListener() {
+		
+		moveFocus = new MoveFocus();
+		myListener = new MyListener();
+		myDocumentListener = new MyDocumentListener();
 	}
 	
 	/**
@@ -212,29 +226,38 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			
+			
 			if (e.getComponent().equals(txtCognome) && e.getKeyCode() == KeyEvent.VK_ENTER) {
 				txtNome.requestFocusInWindow();
+				return;
 			}
 			if (e.getComponent().equals(txtNome) && e.getKeyCode() == KeyEvent.VK_ENTER) {
 				txtGiorno.requestFocusInWindow();
+				return;
 			}
 			if (e.getComponent().equals(txtGiorno) && e.getKeyCode() == KeyEvent.VK_ENTER) {
 				txtMese.requestFocusInWindow();
+				return;
 			}
 			if (e.getComponent().equals(txtMese) && e.getKeyCode() == KeyEvent.VK_ENTER) {
 				txtAnno.requestFocusInWindow();
+				return;
 			}
 			if (e.getComponent().equals(txtAnno) && e.getKeyCode() == KeyEvent.VK_ENTER) {
 				rdSessoM.requestFocusInWindow();
+				return;
 			}
 			if (e.getComponent().equals(rdSessoM) && e.getKeyCode() == KeyEvent.VK_ENTER) {
 				txtComune.requestFocusInWindow();
+				return;
 			}
 			if (e.getComponent().equals(rdSessoF) && e.getKeyCode() == KeyEvent.VK_ENTER) {
 				txtComune.requestFocusInWindow();
+				return;
 			}
 			if (e.getComponent().equals(txtComune) && e.getKeyCode() == KeyEvent.VK_ENTER) {
 				btnCalcola.requestFocusInWindow();
+				return;
 			}
 		}
 
