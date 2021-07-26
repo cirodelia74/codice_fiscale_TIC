@@ -60,7 +60,7 @@ public class CodiceFiscale {
 		char c;
 		
 		// formatto il cognome eliminando eventuali apostrofi e spazi vuoti
-		// e trasformando la stringa tutto in maiscolo
+		// e trasformando la stringa tutto in maiuscolo
 		cognomeAux = cognomeAux.replaceAll( "\\'", ""); 
 		cognomeAux = cognomeAux.replaceAll("\\s+","");
 		cognomeAux = cognomeAux.toUpperCase();
@@ -109,7 +109,7 @@ public class CodiceFiscale {
 		int numConsonanti = 0;
 		
 		// formatto il cognome eliminando eventuali apostrofi e spazi vuoti
-		// e trasformando la stringa tutto in maiscolo
+		// e trasformando la stringa tutto in maiuscolo
 		nomeAux = nomeAux.replaceAll( "\\'", ""); 
 		nomeAux = nomeAux.replaceAll("\\s+","");
 		nomeAux = nomeAux.toUpperCase();
@@ -121,7 +121,8 @@ public class CodiceFiscale {
 				numConsonanti++;
 			}
 		}
-				
+		
+		// codice che calcola la parte relativa al nome se sono presenti 4 o piu' consonanti
 		if (numConsonanti >= 4) {
 			numConsonanti = 0;
 			for (int i=0; i<nomeAux.length(); i++) {
@@ -141,6 +142,7 @@ public class CodiceFiscale {
 			return true;
 		}
 		
+		// codice che calcola la parte relativa al nome se sono presenti meno di 4 consonanti
 		for (int i=0; i<nomeAux.length(); i++) {
 			c = nomeAux.charAt(i);
 			if (!isVocale(c)) {
@@ -204,8 +206,7 @@ public class CodiceFiscale {
 		
 		// aggiungo la parte relativa al mese di nascita
 		if (this.meseNascita != 0) {
-			String mese = impostaMese(this.meseNascita);
-			aux += mese;
+			aux += impostaMese(this.meseNascita);;
 		}
 		else
 			return false;
