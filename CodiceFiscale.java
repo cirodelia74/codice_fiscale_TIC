@@ -28,8 +28,7 @@ public class CodiceFiscale {
 	}
 	
 	/**
-	 * Costruttore della classe senza parametri che inizializza le proprieta'
-	 * con i valori passati come parametri
+	 * Costruttore della classe che inizializza le proprieta' con i valori passati come parametri
 	 * @param cognome: Cognome utente
 	 * @param nome: Nome utente
 	 * @param sesso: Sesso utente
