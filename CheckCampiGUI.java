@@ -46,9 +46,9 @@ public final class CheckCampiGUI {
 	
 	/**
 	 * Metodo che verifica la validita' della data inserita
-	 * @param day: giorno di nascita inserito
-	 * @param month: mese di nascita inserito
-	 * @param year: anno di nascita inserito
+	 * @param giorno: giorno di nascita inserito
+	 * @param mese: mese di nascita inserito
+	 * @param anno: anno di nascita inserito
 	 * @return true se i dati inseriti sono conformi, false altrimenti
 	 */
 	public static boolean isDataValida(int giorno, int mese, int anno) {
