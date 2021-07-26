@@ -60,7 +60,7 @@ public class CodiceFiscale {
 		char c;
 		
 		// formatto il cognome eliminando eventuali apostrofi e spazi vuoti
-		// e trasformando la stringa tutto in maiscolo
+		// e trasformando la stringa tutto in maiuscolo
 		cognomeAux = cognomeAux.replaceAll( "\\'", ""); 
 		cognomeAux = cognomeAux.replaceAll("\\s+","");
 		cognomeAux = cognomeAux.toUpperCase();
