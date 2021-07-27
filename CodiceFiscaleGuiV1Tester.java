@@ -9,7 +9,8 @@ public class CodiceFiscaleGuiV1Tester {
 
 	public static void main(String[] args) {
 		
-		new CodiceFiscaleGuiV1();
+		// new CodiceFiscaleGuiV1();
+		new CodiceFiscaleGuiV1Combo();
 
 	}
 
