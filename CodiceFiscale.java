@@ -449,7 +449,8 @@ public class CodiceFiscale {
 	}
 	
 	/**
-	 * Metodo che converte in numeri i caratteri di posizione pari.
+	 * Metodo che individua il codice di controllo relativo al sedicesimo cerattere
+	 * del Codice Fiscale in funzione del resto ottenuto dall'algoritmo di calcolo
 	 * @param c: carattere da elaborare
 	 * @return l'intero corrispondente nella tabella
 	 */
