@@ -111,18 +111,17 @@ public class CodiceFiscaleGuiV1Combo extends JFrame {
 		setResizable(false);
 		
 		try {
-			// impostazione dell'aspetto dell'applicazione
+		   	// impostazione dell'aspetto dell'applicazione
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
 			/*
-            	Il metodo qui sotto forza l aggiornamento del
-            	JFrame e di tutti i componenti grafici contenuti nel suo interno
-            */
-            SwingUtilities.updateComponentTreeUI(this);
-
-            pack();
-        } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
-        }
+            		Il metodo qui sotto forza l aggiornamento del
+            		JFrame e di tutti i componenti grafici contenuti nel suo interno
+            		*/
+            		SwingUtilities.updateComponentTreeUI(this);
+			pack();
+        	} catch (Exception e) {
+             		JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
+        	}
 		setVisible(true);
 	}
 	
@@ -324,7 +323,7 @@ public class CodiceFiscaleGuiV1Combo extends JFrame {
 			
 			// gestione del pulsante CALCOLA
 			if (e.getActionCommand().equals(BTN_ACTION_CALCOLA)) {
-								calcolaBTN();
+				calcolaBTN();
 				return;				
 			}			
 		}
