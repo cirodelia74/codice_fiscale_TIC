@@ -13,13 +13,19 @@ public class CodiceFiscaleGuiV1Tester {
 		 * Applicazione con inserimento della data di nascita da tastiera per mezzo
 		 * di 3 JTextField
 		 */
-		// new CodiceFiscaleGuiV1();
+		new CodiceFiscaleGuiV1();
 		
 		/*
 		 * Applicazione con inserimento della data di nascita attraverso la 
 		 * selezione dei valori con 3 JComboBox
 		 */
-		new CodiceFiscaleGuiV1Combo();
+		// new CodiceFiscaleGuiV1Combo();
+		
+		/*
+		 * Applicazione con inserimento della data di nascita attraverso la 
+		 * un'unica JTextField
+		 */
+		// new CodiceFiscaleGuiV1JTextField();
 
 	}
 
