@@ -114,15 +114,14 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 			// impostazione dell'aspetto dell'applicazione
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
 			/*
-            	Il metodo qui sotto forza l aggiornamento del
-            	JFrame e di tutti i componenti grafici contenuti nel suo interno
-            */
-            SwingUtilities.updateComponentTreeUI(this);
-
-            pack();
-        } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
-        }
+            		Il metodo qui sotto forza l aggiornamento del
+            		JFrame e di tutti i componenti grafici contenuti nel suo interno
+            		*/
+            		SwingUtilities.updateComponentTreeUI(this);
+		        pack();
+        	} catch (Exception e) {
+             		JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
+        	}
 		setVisible(true);
 	}
 	
@@ -264,7 +263,6 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			
-			
 			if (e.getComponent().equals(txtCognome) && e.getKeyCode() == KeyEvent.VK_ENTER) {
 				txtNome.requestFocusInWindow();
 				return;
@@ -327,7 +325,7 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 			
 			// gestione del pulsante CALCOLA
 			if (e.getActionCommand().equals(BTN_ACTION_CALCOLA)) {
-								calcolaBTN();
+				calcolaBTN();
 				return;				
 			}
 			
@@ -459,5 +457,4 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		btnCalcola.setEnabled(false);
 		campiValidi = true;
 	}
-	
 }
