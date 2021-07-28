@@ -104,15 +104,14 @@ public class CodiceFiscaleGuiV1JTextField extends JFrame {
 			// impostazione dell'aspetto dell'applicazione
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
 			/*
-            	Il metodo qui sotto forza l aggiornamento del
-            	JFrame e di tutti i componenti grafici contenuti nel suo interno
-            */
-            SwingUtilities.updateComponentTreeUI(this);
-
-            pack();
-        } catch (Exception e) {
-             JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
-        }
+	            	Il metodo qui sotto forza l aggiornamento del
+        	    	JFrame e di tutti i componenti grafici contenuti nel suo interno
+            		*/
+            		SwingUtilities.updateComponentTreeUI(this);
+			pack();
+	        } catch (Exception e) {
+        		JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
+        	}
 		setVisible(true);
 	}
 	
@@ -230,8 +229,7 @@ public class CodiceFiscaleGuiV1JTextField extends JFrame {
 	class MoveFocus implements KeyListener {
 
 		@Override
-		public void keyPressed(KeyEvent e) {
-			
+		public void keyPressed(KeyEvent e) {	
 			
 			if (e.getComponent().equals(txtCognome) && e.getKeyCode() == KeyEvent.VK_ENTER) {
 				txtNome.requestFocusInWindow();
@@ -287,7 +285,7 @@ public class CodiceFiscaleGuiV1JTextField extends JFrame {
 			
 			// gestione del pulsante CALCOLA
 			if (e.getActionCommand().equals(BTN_ACTION_CALCOLA)) {
-								calcolaBTN();
+				calcolaBTN();
 				return;				
 			}			
 		}
