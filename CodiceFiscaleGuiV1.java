@@ -19,6 +19,9 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -37,6 +40,10 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 	private final String BTN_ACTION_RESET = "BTN_RESET";
 	private final String RB_M = "Maschile";
 	private final String RB_F = "Femminile";
+	
+	private JMenuBar menuBar;
+	private JMenu menu1;
+	private JMenuItem mi1;
 	
 	private JButton btnCalcola, btnReset;
 	private JTextField txtCognome, txtNome, txtComune;
@@ -74,6 +81,9 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		// costruisco i pannelli
 		componiPanel();
 		
+		// menu' dell'applicazione
+		componiMenu();
+		
 		// istanzio l'oggetto dalla classe CodiceFiscale
 		codiceFiscale = new CodiceFiscale();
 		
@@ -94,6 +104,7 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		
 		
 		// impostazioni finali del Frame Principale
+		setJMenuBar(menuBar);
 		setContentPane(panelPrinc);
 		setLocation(200, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -215,6 +226,20 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 	}
 	
 	/**
+	 * Metodo che costruisce il menu dell'applicazione
+	 */
+	private void componiMenu() {
+		
+		menuBar = new JMenuBar();
+		menu1 = new JMenu("File");
+		mi1 = new JMenuItem("Exit");
+		
+		menu1.add(mi1);
+		menuBar.add(menu1);
+		
+		mi1.addActionListener(myListener);
+	}
+	/**
 	 * Metodo che gestisce il focus tra i vari campi di immissione del testo
 	 * nell'applicazione
 	 */
@@ -304,7 +329,12 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 			if (e.getActionCommand().equals(BTN_ACTION_CALCOLA)) {
 								calcolaBTN();
 				return;				
-			}			
+			}
+			
+			// gestione opzioni menu
+			if (e.getSource().equals(mi1)) {
+				dispose();
+			}
 		}
 	}
 	
