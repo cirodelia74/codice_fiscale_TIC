@@ -285,7 +285,7 @@ public class CodiceFiscale {
 	}
 	
 	/**
-	 * Metodo semplificato che calcola la parte del codice fiscale relativo
+	 * Metodo che calcola la parte del codice fiscale relativo
 	 * al comune di nascita
 	 * @return true se la procedura e' andata a buon fine, false altrimenti
 	 */

@@ -74,5 +74,25 @@ public final class CheckCampiGUI {
 
         return true;
     }
+	
+	/**
+	 * Metodo che controlla che il comune inserito abbia un formato valido
+	 * @param s: stringa da controllare
+	 * @return true se la stringa rispetta il patter, false altrimenti
+	 */
+	public static boolean checkComune(String s) {
+		
+		String aux = s;
+		// formatto il comune eliminando eventuali apostrofi e spazi vuoti
+		// e trasformando la stringa tutto in maiscolo
+		aux = aux.replaceAll( "\\'", ""); 
+		aux = aux.replaceAll("\\s+","");
+		aux = aux.toUpperCase();
+		
+		if (Pattern.matches("[A-Z]+", aux) && aux.length() >= 2)
+			return true;
+		else
+			return false;
+	}
 
 }

@@ -14,6 +14,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -36,6 +43,12 @@ import javax.swing.event.DocumentListener;
 @SuppressWarnings("serial")
 public class CodiceFiscaleGuiV1 extends JFrame {
 	
+	private final String URL = "jdbc:mysql://localhost:3306";
+	private final String DATABASE = "corsodb";
+	private final String USER = "root";
+	private final String PASS = "";
+	private Connection conn = null;
+	
 	private final String BTN_ACTION_CALCOLA = "BTN_CALCOLA";
 	private final String BTN_ACTION_RESET = "BTN_RESET";
 	private final String RB_M = "Maschile";
@@ -57,6 +70,7 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 	private MoveFocus moveFocus;
 	private MyListener myListener;
 	private MyDocumentListener myDocumentListener;
+	private MyWindowListener myWindowListener;
 	
 	private boolean campiValidi = true;
 	
@@ -66,12 +80,19 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 	 *  Costruttore che si occupa di inizializzare tutti i pannelli,
 	 *  di disporli all'interno del pannallo principale ed impostare il Look and Feel.
 	 *  Gestisce, inoltre, tutti i Listener dei componenti   
+	 * @throws SQLException 
 	 */
 	public CodiceFiscaleGuiV1() {
 		
 		super("Codice Fiscale - TIC");
 		//setType(Type.UTILITY);
 		
+		// connessione al database contenente la tabella comuni
+		try {
+			conn = DriverManager.getConnection(URL +"/" +DATABASE, USER, PASS);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "CONNESSIONE AL DATABASE FALLITA", "Errore connessione", JOptionPane.ERROR_MESSAGE);
+		}
 		// inizializzo i componenti dell'applicazione
 		inizializzaComponent();
 		
@@ -102,6 +123,8 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		btnReset.setActionCommand(BTN_ACTION_RESET);
 		btnReset.addActionListener(myListener);
 		
+		// gestione evento chiusura dell'applicazione
+		this.addWindowListener(myWindowListener);
 		
 		// impostazioni finali del Frame Principale
 		setJMenuBar(menuBar);
@@ -114,14 +137,15 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 			// impostazione dell'aspetto dell'applicazione
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel");
 			/*
-            		Il metodo qui sotto forza l aggiornamento del
-            		JFrame e di tutti i componenti grafici contenuti nel suo interno
-            		*/
-            		SwingUtilities.updateComponentTreeUI(this);
-		        pack();
-        	} catch (Exception e) {
-             		JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
-        	}
+            	Il metodo qui sotto forza l aggiornamento del
+            	JFrame e di tutti i componenti grafici contenuti nel suo interno
+            */
+            SwingUtilities.updateComponentTreeUI(this);
+
+            pack();
+        } catch (Exception e) {
+             JOptionPane.showMessageDialog(null, e.getMessage() , "", JOptionPane.ERROR_MESSAGE);
+        }
 		setVisible(true);
 	}
 	
@@ -172,6 +196,7 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		moveFocus = new MoveFocus();
 		myListener = new MyListener();
 		myDocumentListener = new MyDocumentListener();
+		myWindowListener = new MyWindowListener();
 	}
 	
 	/**
@@ -255,6 +280,60 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 	}
 	
 	/**
+	 * class interna che implementa l'interfaccia WindowListener che si
+	 * occupa di effettuare la chiusura della connessione al database
+	 * prima di uscire dall'applicazione
+	 */
+	class MyWindowListener implements WindowListener {
+
+		@Override
+		public void windowOpened(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+			try {
+				close();
+			} catch (SQLException exc) {
+				JOptionPane.showMessageDialog(null, "DISCONNESSIONE AL DATABASE FALLITA", "Errore connessione", JOptionPane.ERROR_MESSAGE);
+			}			
+		}
+
+		@Override
+		public void windowClosed(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowIconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowActivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	/**
 	 * classe interna che implementa i KeyListener dei componenti che la utilizzano
 	 *
 	 */
@@ -262,6 +341,7 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 
 		@Override
 		public void keyPressed(KeyEvent e) {
+			
 			
 			if (e.getComponent().equals(txtCognome) && e.getKeyCode() == KeyEvent.VK_ENTER) {
 				txtNome.requestFocusInWindow();
@@ -325,12 +405,18 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 			
 			// gestione del pulsante CALCOLA
 			if (e.getActionCommand().equals(BTN_ACTION_CALCOLA)) {
-				calcolaBTN();
+								calcolaBTN();
 				return;				
 			}
 			
 			// gestione opzioni menu
 			if (e.getSource().equals(mi1)) {
+				try {
+					close();
+				} catch (SQLException exc) {
+					JOptionPane.showMessageDialog(null, "DISCONNESSIONE AL DATABASE FALLITA", "Errore connessione", JOptionPane.ERROR_MESSAGE);
+				}	
+
 				dispose();
 			}
 		}
@@ -355,12 +441,39 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 	 * del Codice Fiscale e verifica la validita' delle informazioni immesse
 	 */
 	private void calcolaBTN() {
+		
+		PreparedStatement stat = null;
+		String query = "SELECT cod_fisco FROM comuni WHERE comune = ?";
+		ResultSet codice = null;
+		String codiceComune = "";
+		
 		if (!CheckCampiGUI.checkCognome(txtCognome.getText())) {
 			campiValidi = false;
 		}
 			
 		
 		if (!CheckCampiGUI.checkNome(txtNome.getText())) {
+			campiValidi = false;
+		}
+		
+		if (CheckCampiGUI.checkComune(txtComune.getText())) {
+			
+			try {
+				stat = conn.prepareStatement(query);
+				stat.setString(1, txtComune.getText());
+				codice = stat.executeQuery();
+
+				codice.next();
+				codiceComune = codice.getString("cod_fisco");
+				
+				codice.close();
+				stat.close();
+				
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(null, "COMUNE NON TROVATO", "", JOptionPane.ERROR_MESSAGE);
+				campiValidi = false;
+			}		
+		} else {
 			campiValidi = false;
 		}
 			
@@ -398,7 +511,7 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 			else {
 				codiceFiscale.setSesso('F');
 			}
-			codiceFiscale.setComuneNascita(txtComune.getText());
+			codiceFiscale.setComuneNascita(codiceComune);
 			
 			// calcolo il codice fiscale
 			if (codiceFiscale.calcolaCodiceFiscale()) {
@@ -457,4 +570,16 @@ public class CodiceFiscaleGuiV1 extends JFrame {
 		btnCalcola.setEnabled(false);
 		campiValidi = true;
 	}
+	
+	/**
+	 * Chiusura della connessione al Database
+	 */
+	public void close() throws SQLException {
+		
+		if (conn != null) {
+			conn.close();
+		}
+		
+	}
+	
 }
